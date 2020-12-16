@@ -1,0 +1,45 @@
+
+    ###############
+    TWEETS ANALYSIS
+    ###############
+    
+MENTIONS OF Loi Securite Globale:
+--------------
+Mentions of Loi Securite Globale : 7
+Total tweets: 110
+
+
+TOP 20 HASHTAGS:
+--------------
+nantes: 4
+loisecuriteglobale: 4
+marchedeslibertés: 4
+stoploisecuriteglobale: 3
+france: 1
+macron: 1
+polqc: 1
+
+Total number of hashtags used: 18
+
+
+TYPES OF TWEETS - ORIGINAL VS RETWEETED:
+--------------
+Number of original tweets: 29
+Number of retweeted tweets: 81
+
+
+COUNTS LIKES ON TWEETS:
+--------------
+Number of tweets liked more than 1 times: 75
+Number of tweets liked more than 100 times: 51
+Number of tweets liked more than 1000 times: 10
+Number of tweets liked more than 5000 times: 1
+Number of tweets liked more than 10000 times: 0
+Number of tweets liked more than 50000 times: 0
+
+
+TYPES OF TWEET CONTENT - TEXT / AUDIO / VIDEO
+--------------
+Tweets with only text: 104
+Tweets with images: 6
+Tweets with videos: 0
