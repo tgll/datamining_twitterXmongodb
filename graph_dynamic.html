@@ -1,0 +1,212 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1>None</h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 450px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+        #loadingBar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width: 100%;
+            height: 450px;
+            background-color:rgba(200,200,200,0.8);
+            -webkit-transition: all 0.5s ease;
+            -moz-transition: all 0.5s ease;
+            -ms-transition: all 0.5s ease;
+            -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
+            opacity:1;
+        }
+
+        #bar {
+            position:absolute;
+            top:0px;
+            left:0px;
+            width:20px;
+            height:20px;
+            margin:auto auto auto auto;
+            border-radius:11px;
+            border:2px solid rgba(30,30,30,0.05);
+            background: rgb(0, 173, 246); /* Old browsers */
+            box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+        }
+
+        #border {
+            position:absolute;
+            top:10px;
+            left:10px;
+            width:500px;
+            height:23px;
+            margin:auto auto auto auto;
+            box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+            border-radius:10px;
+        }
+
+        #text {
+            position:absolute;
+            top:8px;
+            left:530px;
+            width:30px;
+            height:50px;
+            margin:auto auto auto auto;
+            font-size:22px;
+            color: #000000;
+        }
+
+        div.outerBorder {
+            position:relative;
+            top:400px;
+            width:600px;
+            height:44px;
+            margin:auto auto auto auto;
+            border:8px solid rgba(0,0,0,0.1);
+            background: rgb(252,252,252); /* Old browsers */
+            background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+            border-radius:72px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+<div id="loadingBar">
+    <div class="outerBorder">
+        <div id="text">0%</div>
+        <div id="border">
+            <div id="bar"></div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": 1281669801249775617, "label": 1281669801249775617, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1210890516721631233, "label": 1210890516721631233, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1268654112738103307, "label": 1268654112738103307, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 271439132, "label": 271439132, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 726365373965152257, "label": 726365373965152257, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 946377666, "label": 946377666, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1023945297838452737, "label": 1023945297838452737, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 206890430, "label": 206890430, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3981402263, "label": 3981402263, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1024297365254164480, "label": 1024297365254164480, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 717476046900166657, "label": 717476046900166657, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2398454779, "label": 2398454779, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3360765910, "label": 3360765910, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1209871445708460032, "label": 1209871445708460032, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 4471461159, "label": 4471461159, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2912708272, "label": 2912708272, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3012770596, "label": 3012770596, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1105744236186664960, "label": 1105744236186664960, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1138731335969845248, "label": 1138731335969845248, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1964143238, "label": 1964143238, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1264912912872812544, "label": 1264912912872812544, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1316485347790987264, "label": 1316485347790987264, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2966333525, "label": 2966333525, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2795101474, "label": 2795101474, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1128387720374575107, "label": 1128387720374575107, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2149556217, "label": 2149556217, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1419066451, "label": 1419066451, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1326800140779315200, "label": 1326800140779315200, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1109875812, "label": 1109875812, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3373762791, "label": 3373762791, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 121904424, "label": 121904424, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1275826098186653700, "label": 1275826098186653700, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 830798897215844352, "label": 830798897215844352, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1098510534, "label": 1098510534, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2427645005, "label": 2427645005, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 787334577287233540, "label": 787334577287233540, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1172937186813124608, "label": 1172937186813124608, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2963932037, "label": 2963932037, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1267235916, "label": 1267235916, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1318869490646589442, "label": 1318869490646589442, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1124273979076820993, "label": 1124273979076820993, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3024543387, "label": 3024543387, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1305859158533701637, "label": 1305859158533701637, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 542164261, "label": 542164261, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 64938887, "label": 64938887, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 203311649, "label": 203311649, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1287167017888419841, "label": 1287167017888419841, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 925369992354455552, "label": 925369992354455552, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2273280661, "label": 2273280661, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 161611017, "label": 161611017, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 921342498, "label": 921342498, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 783710695716159489, "label": 783710695716159489, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 809125377863880704, "label": 809125377863880704, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 46375782, "label": 46375782, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1273362924027940872, "label": 1273362924027940872, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 144937882, "label": 144937882, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1246585162189680641, "label": 1246585162189680641, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1100120769806389250, "label": 1100120769806389250, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 301959570, "label": 301959570, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2263820423, "label": 2263820423, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2381727134, "label": 2381727134, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2790577429, "label": 2790577429, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 114111998, "label": 114111998, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1017601615, "label": 1017601615, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 4865214225, "label": 4865214225, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1050439141777965057, "label": 1050439141777965057, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 2706899486, "label": 2706899486, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1101940850454642691, "label": 1101940850454642691, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 907605985640022019, "label": 907605985640022019, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 778611018419343364, "label": 778611018419343364, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1384711458, "label": 1384711458, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 220788261, "label": 220788261, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1047788602036506625, "label": 1047788602036506625, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 12786782, "label": 12786782, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 62270168, "label": 62270168, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 238451639, "label": 238451639, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1420701362, "label": 1420701362, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1107112112, "label": 1107112112, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1022456532284461058, "label": 1022456532284461058, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3237437571, "label": 3237437571, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1221890496626335749, "label": 1221890496626335749, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 797967686689030145, "label": 797967686689030145, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 184486411, "label": 184486411, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1022051639270748160, "label": 1022051639270748160, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1302494569565741056, "label": 1302494569565741056, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1155440605956386816, "label": 1155440605956386816, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 367703310, "label": 367703310, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 964477365287116800, "label": 964477365287116800, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 787692914, "label": 787692914, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1154100938182930432, "label": 1154100938182930432, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3224878504, "label": 3224878504, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1243921286, "label": 1243921286, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1120251726941102081, "label": 1120251726941102081, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1252240986413109261, "label": 1252240986413109261, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 104034000, "label": 104034000, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1103117414, "label": 1103117414, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 376979679, "label": 376979679, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 276093811, "label": 276093811, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 285804058, "label": 285804058, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 3408280389, "label": 3408280389, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 596570515, "label": 596570515, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1289583925740937216, "label": 1289583925740937216, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1337007686483910657, "label": 1337007686483910657, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 1338159400842825730, "label": 1338159400842825730, "shape": "dot", "size": 10}, {"font": {"color": "white"}, "id": 240211670, "label": 240211670, "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": 1281669801249775617, "to": 1210890516721631233, "value": 0, "weight": 1}, {"from": 1281669801249775617, "to": 1268654112738103307, "value": 0, "weight": 1}, {"from": 271439132, "to": 726365373965152257, "value": 0, "weight": 1}, {"from": 726365373965152257, "to": 946377666, "value": 0, "weight": 1}, {"from": 726365373965152257, "to": 1023945297838452737, "value": 0, "weight": 1}, {"from": 726365373965152257, "to": 206890430, "value": 0, "weight": 1}, {"from": 726365373965152257, "to": 3981402263, "value": 0, "weight": 1}, {"from": 726365373965152257, "to": 1024297365254164480, "value": 0, "weight": 1}, {"from": 717476046900166657, "to": 2398454779, "value": 0, "weight": 1}, {"from": 2398454779, "to": 3360765910, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1209871445708460032, "value": 0, "weight": 1}, {"from": 2398454779, "to": 4471461159, "value": 0, "weight": 1}, {"from": 2398454779, "to": 2912708272, "value": 0, "weight": 1}, {"from": 2398454779, "to": 3012770596, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1105744236186664960, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1138731335969845248, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1964143238, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1264912912872812544, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1316485347790987264, "value": 0, "weight": 1}, {"from": 2398454779, "to": 2966333525, "value": 0, "weight": 1}, {"from": 2398454779, "to": 2795101474, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1128387720374575107, "value": 0, "weight": 1}, {"from": 2398454779, "to": 2149556217, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1419066451, "value": 0, "weight": 1}, {"from": 2398454779, "to": 1326800140779315200, "value": 0, "weight": 1}, {"from": 1109875812, "to": 3373762791, "value": 0, "weight": 1}, {"from": 3373762791, "to": 121904424, "value": 0, "weight": 1}, {"from": 3373762791, "to": 1275826098186653700, "value": 0, "weight": 1}, {"from": 3373762791, "to": 830798897215844352, "value": 0, "weight": 1}, {"from": 3373762791, "to": 1098510534, "value": 0, "weight": 1}, {"from": 3373762791, "to": 2427645005, "value": 0, "weight": 1}, {"from": 3373762791, "to": 787334577287233540, "value": 0, "weight": 1}, {"from": 3373762791, "to": 1172937186813124608, "value": 0, "weight": 1}, {"from": 3373762791, "to": 2963932037, "value": 0, "weight": 1}, {"from": 3373762791, "to": 1267235916, "value": 0, "weight": 1}, {"from": 3373762791, "to": 1318869490646589442, "value": 0, "weight": 1}, {"from": 3373762791, "to": 1124273979076820993, "value": 0, "weight": 1}, {"from": 3373762791, "to": 3024543387, "value": 0, "weight": 1}, {"from": 3373762791, "to": 1305859158533701637, "value": 0, "weight": 1}, {"from": 542164261, "to": 64938887, "value": 0, "weight": 1}, {"from": 64938887, "to": 203311649, "value": 0, "weight": 1}, {"from": 1287167017888419841, "to": 925369992354455552, "value": 0, "weight": 1}, {"from": 2273280661, "to": 161611017, "value": 0, "weight": 1}, {"from": 921342498, "to": 783710695716159489, "value": 0, "weight": 1}, {"from": 809125377863880704, "to": 46375782, "value": 0, "weight": 1}, {"from": 46375782, "to": 1273362924027940872, "value": 0, "weight": 1}, {"from": 46375782, "to": 144937882, "value": 0, "weight": 1}, {"from": 46375782, "to": 1246585162189680641, "value": 0, "weight": 1}, {"from": 1100120769806389250, "to": 301959570, "value": 0, "weight": 1}, {"from": 2263820423, "to": 2381727134, "value": 0, "weight": 1}, {"from": 2790577429, "to": 114111998, "value": 0, "weight": 1}, {"from": 1017601615, "to": 4865214225, "value": 0, "weight": 1}, {"from": 1050439141777965057, "to": 2706899486, "value": 0, "weight": 1}, {"from": 1101940850454642691, "to": 907605985640022019, "value": 0, "weight": 1}, {"from": 907605985640022019, "to": 778611018419343364, "value": 0, "weight": 1}, {"from": 1384711458, "to": 220788261, "value": 0, "weight": 1}, {"from": 1047788602036506625, "to": 12786782, "value": 0, "weight": 1}, {"from": 12786782, "to": 62270168, "value": 0, "weight": 1}, {"from": 12786782, "to": 238451639, "value": 0, "weight": 1}, {"from": 12786782, "to": 1420701362, "value": 0, "weight": 1}, {"from": 1107112112, "to": 1022456532284461058, "value": 0, "weight": 1}, {"from": 3237437571, "to": 1221890496626335749, "value": 0, "weight": 1}, {"from": 797967686689030145, "to": 184486411, "value": 0, "weight": 1}, {"from": 1022051639270748160, "to": 1302494569565741056, "value": 0, "weight": 1}, {"from": 1155440605956386816, "to": 367703310, "value": 0, "weight": 1}, {"from": 964477365287116800, "to": 787692914, "value": 0, "weight": 1}, {"from": 1154100938182930432, "to": 3224878504, "value": 0, "weight": 1}, {"from": 1243921286, "to": 1120251726941102081, "value": 0, "weight": 1}, {"from": 1252240986413109261, "to": 104034000, "value": 0, "weight": 1}, {"from": 1103117414, "to": 376979679, "value": 0, "weight": 1}, {"from": 276093811, "to": 285804058, "value": 0, "weight": 1}, {"from": 3408280389, "to": 596570515, "value": 0, "weight": 1}, {"from": 1289583925740937216, "to": 1337007686483910657, "value": 0, "weight": 1}, {"from": 1338159400842825730, "to": 240211670, "value": 0, "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+        network.on("stabilizationProgress", function(params) {
+      		document.getElementById('loadingBar').removeAttribute("style");
+	        var maxWidth = 496;
+	        var minWidth = 20;
+	        var widthFactor = params.iterations/params.total;
+	        var width = Math.max(minWidth,maxWidth * widthFactor);
+
+	        document.getElementById('bar').style.width = width + 'px';
+	        document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+	    });
+	    network.once("stabilizationIterationsDone", function() {
+	        document.getElementById('text').innerHTML = '100%';
+	        document.getElementById('bar').style.width = '496px';
+	        document.getElementById('loadingBar').style.opacity = 0;
+	        // really clean the dom element
+	        setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+	    });
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
